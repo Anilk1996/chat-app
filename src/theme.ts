@@ -3,6 +3,7 @@ import {
   MantineTheme,
   MantineThemeComponents,
 } from "@mantine/styles/lib/theme/types/MantineTheme";
+import textVariants from "./textVariants";
 
 const getTheme = () => {
   return {
@@ -13,36 +14,10 @@ const getTheme = () => {
           _params: TextStylesParams,
           { variant }
         ) => ({
-          root: { ...getTextVariants(variant) },
+          root: textVariants[variant as string],
         }),
       },
     } as MantineThemeComponents,
   };
 };
-const getTextVariants: any = (variant: string) => {
-  const values = parseStringToObject(variant);
-  return {
-    [variant]: {
-      fontSize: `${values.fs}px`,
-      fontWeight: values.fw,
-      lineHeight: `${values.lh}px`,
-    },
-  }[variant];
-};
-function parseStringToObject(inputString: string): Record<string, number> {
-  const keyValuePairs = inputString.match(/[a-zA-Z]+(\d+)/g);
-
-  if (!keyValuePairs) {
-    return {};
-  }
-
-  const result: Record<string, number> = {};
-
-  keyValuePairs.forEach((pair) => {
-    const [key, value] = pair.match(/[a-zA-Z]+|\d+/g) as [string, string];
-    result[key] = parseInt(value, 10);
-  });
-
-  return result;
-}
 export default getTheme;
