@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { MantineProvider } from "@mantine/core";
+import Authentication from "./components/pages/Authentication";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ProtectedRoutes from "./routes/protectedRoutes";
+import Home from "./components/pages/Home";
+import PageNotFound from "./components/pages/ErrorPages/PageNotFound";
+import React from "react";
+import getTheme from "./theme";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <MantineProvider theme={getTheme()} withGlobalStyles withNormalizeCSS>
+        <Routes>
+          <Route path="/" element={<Authentication />} />
+          <Route path="/login" element={<Authentication />} />
+          <Route
+            path="/home"
+            element={<ProtectedRoutes component={<Home />} />}
+          />
+          <Route path="/*" element={<PageNotFound />} />
+        </Routes>
+      </MantineProvider>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
