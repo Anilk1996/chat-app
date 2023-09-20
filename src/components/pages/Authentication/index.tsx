@@ -1,8 +1,20 @@
 import { Text } from "@mantine/core";
 import React from "react";
-import { StyledBox, StyledContainer } from "./styles";
+import {
+  StyledBox,
+  StyledContainer,
+  StyledLoginBox,
+  StyledSubHeadingText,
+  StyledTextContainer,
+  SubHeadingContainer,
+  Wrapper,
+} from "./styles";
+import LoginForm from "./LoginForm";
+import { useDisclosure } from "@mantine/hooks";
+import SignUpModal from "./SignUpModal";
 
 const Authentication = () => {
+  const [opened, { open, close }] = useDisclosure(false);
   // const [type, toggle] = useToggle(["login", "register"]);
   // const form = useForm({
   //   initialValues: {
@@ -37,12 +49,27 @@ const Authentication = () => {
   //   }
   // };
   return (
-    <StyledContainer>
-      <StyledBox>
-        <Text variant="fs72fw700lh72">ChatUp</Text>
-      </StyledBox>
-      <StyledBox>Hello world</StyledBox>
-    </StyledContainer>
+    <Wrapper>
+      <StyledContainer>
+        <StyledBox>
+          <StyledTextContainer>
+            <Text variant="text3">ChatUp</Text>
+            <SubHeadingContainer>
+              <StyledSubHeadingText variant="text4">
+                Welcome to ChatUp
+              </StyledSubHeadingText>
+              <StyledSubHeadingText variant="text4">
+                "Speak Freely, Message Easily."
+              </StyledSubHeadingText>
+            </SubHeadingContainer>
+          </StyledTextContainer>
+        </StyledBox>
+        <StyledLoginBox>
+          <LoginForm opened={opened} showModal={open} />
+        </StyledLoginBox>
+      </StyledContainer>
+      <SignUpModal {...{ opened, close }} />
+    </Wrapper>
   );
 };
 export default Authentication;
